@@ -1,3 +1,13 @@
-dan/hotico/config/WellAppInitializer.class
+dan/hotico/util/AttributeNames.class
+dan/hotico/controller/TodoItemController.class
+dan/hotico/model/TodoItem.class
+dan/hotico/service/DemoServiceImpl.class
 dan/hotico/config/WebConfig.class
+dan/hotico/config/WebAppInitializer.class
+dan/hotico/util/Mappings.class
+dan/hotico/model/TodoData.class
+dan/hotico/service/TodoItemService.class
 dan/hotico/controller/DemoController.class
+dan/hotico/util/ViewNames.class
+dan/hotico/service/TodoItemServiceImpl.class
+dan/hotico/service/DemoService.class

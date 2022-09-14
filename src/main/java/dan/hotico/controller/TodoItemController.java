@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 
@@ -42,8 +43,11 @@ public class TodoItemController {
     }
 
     @GetMapping(Mappings.ADD_ITEM)
-    public String addAddedItem(Model model) {
-        TodoItem todoItem = new TodoItem("", "", LocalDate.now());
+    public String addAddedItem(@RequestParam(required = false, defaultValue = "-1") int id, Model model) {
+        TodoItem todoItem = todoItemService.getItem(id);
+        if(todoItem == null) {
+            todoItem = new TodoItem("", "", LocalDate.now());
+        }
         model.addAttribute(AttributeNames.TODO_ITEM, todoItem);
         return ViewNames.ADD_ITEM;
     }
@@ -52,7 +56,25 @@ public class TodoItemController {
     @PostMapping(Mappings.ADD_ITEM)
     public String processItem(@ModelAttribute(AttributeNames.TODO_ITEM) TodoItem todoItem) {
         log.info("todoItem from form = {}", todoItem);
-        todoItemService.addItem(todoItem);
+        if(todoItem.getId() == 0) {
+            todoItemService.addItem(todoItem);
+        } else {
+            todoItemService.updateItem(todoItem);
+        }
         return "redirect:/" + Mappings.ITEMS;
+    }
+
+    @GetMapping(Mappings.DELETE_ITEM)
+    public String deleteItem(@RequestParam int id) {
+        log.info("Deleting item with id = {}", id);
+        todoItemService.removeItem(id);
+        return "redirect:/" + Mappings.ITEMS;
+    }
+
+    @GetMapping(Mappings.VIEW_ITEM)
+    public String viewItem(@RequestParam int id, Model model) {
+        TodoItem todoItem = todoItemService.getItem(id);
+        model.addAttribute(AttributeNames.TODO_ITEM, todoItem);
+        return ViewNames.VIEW_ITEM;
     }
 }

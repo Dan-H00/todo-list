@@ -15,6 +15,7 @@
 </head>
 <body>
     <div align="center">
+        <%--@elvariable id="${AttributeNames.TODO_ITEM}" type=""--%>
         <form:form method="POST" modelAttribute="${AttributeNames.TODO_ITEM}">
             <table border="1" cellpadding="5">
                 <tr>
